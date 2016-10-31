@@ -1,6 +1,6 @@
 var fs = require('fs');
 var rootDir = process.cwd();
-var cssfile = rootDir + '/css/bootstrap/css/bootstrap.min.css';
+var cssfile = rootDir + '/css/bootstrap/css/bootstrap.min.css.map';
 var css = fs.readFileSync(cssfile,'utf8');
 var enviar = function(res) {
 	res.writeHead(200, {'Content-Type': 'text/css'});

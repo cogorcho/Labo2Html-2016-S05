@@ -16,6 +16,7 @@
   "author": "Juan Arce",
   "license": "ISC",
   "dependencies": {
-    "sqlite": "^2.2.1"
+    "sqlite-sync": "^0.3.5",
+    "sqlite3": "^3.1.8"
   }
 }

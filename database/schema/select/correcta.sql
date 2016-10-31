@@ -1,0 +1,1 @@
+select correcta from preguntas where categoriaid = ? and areaid = ? and preguntaid = ?

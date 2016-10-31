@@ -1,0 +1,1 @@
+delete from areas where id = ?

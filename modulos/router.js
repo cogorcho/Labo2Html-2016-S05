@@ -11,9 +11,11 @@ var codigoq = require('./codigoq.js');
 var notfound = require('./notfound.js');
 var js = require('./js.js');
 var css = require('./css.js');
+var cssmap = require('./cssmap.js');
 
 var route = function(req, res) {
   var pathname = url.parse(req.url).pathname;
+  var params = url.parse(req.url).query;
 
   switch (pathname) {
       case '/' : {
@@ -26,10 +28,10 @@ var route = function(req, res) {
         areas.enviar(res); break;
       }
       case '/preguntas' : {
-        preguntas.enviar(res); break;
+        preguntas.enviar(res, params); break;
       }
       case '/respuestas' : {
-        respuestas.enviar(res); break;
+        respuestas.enviar(res, params); break;
       }
       case '/codigoq' : {
         codigoq.enviar(res); break;
@@ -39,6 +41,9 @@ var route = function(req, res) {
       }
       case '/css/bootstrap/css/bootstrap.min.css' : {
         css.enviar(res); break;
+      }
+      case '/css/bootstrap/css/bootstrap.min.css.map' : {
+        cssmap.enviar(res); break;
       }
       default : { 
         console.log('Recibido: ' + pathname + '. Requerimiento invalido');

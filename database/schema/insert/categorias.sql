@@ -1,0 +1,1 @@
+insert into categorias (id, descripcion) values (?,?)

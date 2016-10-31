@@ -1,0 +1,1 @@
+create table areas (id int not null primary key, descripcion varchar(50) not null)
