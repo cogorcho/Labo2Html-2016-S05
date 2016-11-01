@@ -7,7 +7,6 @@ var areaSeleccionada = 0;
 // Ajax, esta funcion va al server y trae la data en json
 //--------------------------------------------------------------------
 function ajax(target, f, p_pregunta) {
-    console.log(p_pregunta);
     var params = '?{\"categoriaid\":' + categoriaSeleccionada + 
                 ',\"areaid\":' + areaSeleccionada;
     if (p_pregunta !== undefined || p_pregunta === 0) {
@@ -16,7 +15,7 @@ function ajax(target, f, p_pregunta) {
     params += '}'; 
 
     var ajax_url = "./" + target + params;
-    console.log(ajax_url);
+    //console.log(ajax_url);
     var ajax_request = new XMLHttpRequest();
     //ajax_request.addEventListener("loadend", controlCarga);
     ajax_request.onreadystatechange = function() {
@@ -75,6 +74,7 @@ function armarRB(objData) {
         var lb = document.createElement('label');
         lb.setAttribute("for", rb);
         lb.innerHTML = objData.data[i].descripcion;
+	lb.className = "radio-inline";
         fset.appendChild(lb);
         rb.type = 'radio';
         rb.name = objData.id;
@@ -166,47 +166,71 @@ function rowSelected(ev) {
 // Popup con las respuestas
 //--------------------------------------------------
 function popup(obj) {
-    console.log(obj);
+    console.dir(obj);
+
     var div0 = document.createElement('div');
-    div0.id = 'text';
-    div0.className = 'lightbox';
+    div0.id = 'myModal';
+    //div0.className = 'modal';
+    div0.role = 'dialog';
     document.body.appendChild(div0);
     
     var div1 = document.createElement('div');
-    div1.className = 'box';
+    div1.className = 'modal-dialog';
+    div0.appendChild(div1);
 
-        var pregunta = document.createElement('p');
-        pregunta.className = 'title';
-        pregunta.textContent = obj.pregunta.id + ': ' + obj.pregunta.texto;
-        div1.appendChild(pregunta);
+    <!-- modal content -->
+    var div2 = document.createElement('div');
+    div2.className = 'modal-content';
+    div1.appendChild(div2);
+   
+    <!-- modal header -->
+    var div3 = document.createElement('div');
+    div3.className = 'modal-header';
+    div2.appendChild(div3);
 
-        var respuestas = document.createElement('div');
-        respuestas.className = 'content';
-        var cuantas = obj.data.length;
-        for (var i = 0; i < cuantas; i++) {
-            var rb = document.createElement('input');
-            var lb = document.createElement('label');
-            var br = document.createElement('br');
-            lb.setAttribute("for", rb);
-            lb.innerHTML = obj.data[i].texto;
-            rb.type = 'radio';
-            rb.name = 'rbRespuestas';
-            rb.id =  obj.data[i].texto;
-            rb.value = obj.data[i].respuestaid;
-            respuestas.appendChild(rb);
-            respuestas.appendChild(lb);
-            respuestas.appendChild(br);
-        }
-        div1.appendChild(respuestas);
-        respuestas.addEventListener('click', clickRB);
+    var pregunta = document.createElement('p');
+    pregunta.className = 'title';
+    pregunta.textContent = obj.pregunta.id + ': ' + obj.pregunta.texto;
+    div3.appendChild(pregunta);
 
-        var responder = document.createElement('input');
-        responder.type = 'button';
-        responder.value = 'Responder';
-        responder.id = 'btnResponder';
-        //responder.addEventListener('click', procesarRespuesta);
-        div1.appendChild(responder);
+    <!-- modal body -->
+    var div4 = document.createElement('div');
+    div4.className = 'modal-body';
+    div2.appendChild(div4);
 
+    var respuestas = document.createElement('div');
+    respuestas.className = 'content';
+    var cuantas = obj.data.length;
+    for (var i = 0; i < cuantas; i++) {
+        var rb = document.createElement('input');
+        var lb = document.createElement('label');
+        var br = document.createElement('br');
+        lb.setAttribute("for", rb);
+        lb.innerHTML = obj.data[i].texto;
+        rb.type = 'radio';
+        rb.name = 'rbRespuestas';
+        rb.id =  obj.data[i].texto;
+        rb.value = obj.data[i].respuestaid;
+        respuestas.appendChild(rb);
+        respuestas.appendChild(lb);
+        respuestas.appendChild(br);
+    }
+    div4.appendChild(respuestas);
+    respuestas.addEventListener('click', clickRB);
+
+    <!-- modal footer -->
+    var div5 = document.createElement('div');
+    div5.className = 'modal-footer';
+    div2.appendChild(div5);
+
+    var responder = document.createElement('input');
+    responder.type = 'button';
+    responder.value = 'Responder';
+    responder.id = 'btnResponder';
+    responder.addEventListener('click', procesarRespuesta);
+    div5.appendChild(responder);
+
+    /*
         var cbxMarcar = document.createElement('input');
         cbxMarcar.type = 'checkbox';
         cbxMarcar.id = 'cbExamen';
@@ -221,17 +245,27 @@ function popup(obj) {
         div1.appendChild(cbxMarcar);
         div1.appendChild(cbLabel);
 
-        var closer = document.createElement('input');
-        closer.type = 'button';
-        closer.value = 'Cerrar';
-        closer.id = 'btnCerrar';
-        //closer.addEventListener('click', closePopup);
-        div1.appendChild(closer);
+    */
+    var closer = document.createElement('input');
+    closer.type = 'button';
+    closer.value = 'Cerrar';
+    closer.id = 'btnCerrar';
+    closer.addEventListener('click', closePopup);
+    div5.appendChild(closer);
 
-        div0.appendChild(div1);
-        //Aparezcase la popup!
-        div0.style.display = "block";
-        div0.style.outline = "none";
+    //Aparezcase la popup!
+    
+    //div0.style.display = "block";
+    //div0.style.outline = "none";
+    console.log(div0);
+}
+
+function closePopup(ev) {
+    console.log(ev.srcElement);
+}
+
+function procesarRespuesta(ev) {
+    console.log(ev.srcElement);
 }
 
 //--------------------------------------------------

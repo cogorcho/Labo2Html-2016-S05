@@ -3,7 +3,6 @@ var http = require('http');
 var db = require('./sql.js');
 
 var enviar = function(res, params) {
-	console.log(params);
 	var opar = JSON.parse(params.replace(/\%22/g,'\"'));
 	var preguntas = JSON.stringify(traer(opar.categoriaid, opar.areaid));
 	res.writeHead(200, {'Content-Type': 'text/plain'});
